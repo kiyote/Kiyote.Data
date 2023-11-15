@@ -55,11 +55,11 @@ jobs:
     - name: Compile and Test
       run: dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=cobertura
       env:
-        KIYOTE__DATA__DATASOURCE: 'localhost'
-        KIYOTE__DATA__USERID: 'sa'
-        KIYOTE__DATA__PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
-        KIYOTE__DATA__INITIALCATALOG: 'TESTING'
-        KIYOTE__DATA__CONNECTIONSTRINGPROVIDER: 'Builder'
+        KIYOTE__DATA__SQLSERVER__DATASOURCE: 'localhost'
+        KIYOTE__DATA__SQLSERVER__USERID: 'sa'
+        KIYOTE__DATA__SQLSERVER__PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
+        KIYOTE__DATA__SQLSERVER__INITIALCATALOG: 'TESTING'
+        KIYOTE__DATA__SQLSERVER__CONNECTIONSTRINGPROVIDER: 'Builder'
       
     - name: Create Orphan Branch
       shell: bash

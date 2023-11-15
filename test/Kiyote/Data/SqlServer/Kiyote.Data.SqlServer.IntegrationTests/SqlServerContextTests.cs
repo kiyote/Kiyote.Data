@@ -59,14 +59,14 @@ public sealed class SqlServerContextTests {
 	) {
 		IConfigurationRoot configuration = new ConfigurationBuilder()
 			.AddInMemoryCollection( new Dictionary<string, string?>() {
-				[ "Kiyote:Data:InitialCatalog" ] = catalog,
-				[ "Kiyote:Data:DataSource" ] = "localhost",
-				[ "Kiyote:Data:ConnectionStringProvider" ] = "Integrated"
+				[ "Kiyote:Data:SqlServer:InitialCatalog" ] = catalog,
+				[ "Kiyote:Data:SqlServer:DataSource" ] = "localhost",
+				[ "Kiyote:Data:SqlServer:ConnectionStringProvider" ] = "Integrated"
 			} )
 			.AddEnvironmentVariables()
 			.Build();
 
-		IConfigurationSection config = configuration.GetSection( "Kiyote" ).GetSection( "Data" );
+		IConfigurationSection config = configuration.GetSection( "Kiyote" ).GetSection( "Data" ).GetSection( "SqlServer" );
 		_ = services.Configure<TestSqlServerContextOptions>( config );
 		string? connectionStringProvider = config[ nameof( SqlServerContextOptions.ConnectionStringProvider ) ];
 		if( connectionStringProvider == SqlServerContextOptions.BuilderConnectionStringProvider ) {
