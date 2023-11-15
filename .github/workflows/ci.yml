@@ -41,12 +41,6 @@ jobs:
     steps:
     - uses: Brightspace/third-party-actions@actions/checkout
 
-    - name: Create Db Schema
-      shell: bash
-      run: ${{ github.workspace }}/db.sh
-      env:
-        MSSQL_SA_PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
-
     - name: Setup .NET
       uses: Brightspace/third-party-actions@actions/setup-dotnet
       with:
