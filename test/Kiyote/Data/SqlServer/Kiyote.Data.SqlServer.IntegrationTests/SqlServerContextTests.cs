@@ -11,10 +11,8 @@ public sealed class SqlServerContextTests {
 
 	[SetUp]
 	public void Setup() {
-		_catalog = Guid.NewGuid().ToString( "N" );
-
 		IServiceCollection serviceCollection = new ServiceCollection();
-		ConfigureDatabase( serviceCollection, _catalog );
+		_catalog = ConfigureDatabase( serviceCollection, Guid.NewGuid().ToString( "N" ) );
 		IServiceProvider services = serviceCollection.BuildServiceProvider();
 
 		_scope = services.CreateScope();
@@ -55,7 +53,7 @@ public sealed class SqlServerContextTests {
 		Assert.AreNotEqual( 0, result );
 	}
 
-	private static void ConfigureDatabase(
+	private static string ConfigureDatabase(
 		IServiceCollection services,
 		string catalog
 	) {
@@ -78,6 +76,8 @@ public sealed class SqlServerContextTests {
 		} else {
 			_ = services.AddAwsSecretSqlServer<TestSqlServerContextOptions>();
 		}
+
+		return config[ "InitialCatalog" ] ?? catalog;
 	}
 
 	private static void CreateDatabase(

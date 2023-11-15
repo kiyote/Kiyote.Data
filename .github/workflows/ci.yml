@@ -41,6 +41,12 @@ jobs:
     steps:
     - uses: Brightspace/third-party-actions@actions/checkout
 
+    - name: Wait for DB
+      shell: bash
+      run: ${{ github.workspace }}/db.sh
+      env:
+        MSSQL_SA_PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
+
     - name: Setup .NET
       uses: Brightspace/third-party-actions@actions/setup-dotnet
       with:
@@ -52,7 +58,7 @@ jobs:
         KIYOTE__DATA__DATASOURCE: 'localhost'
         KIYOTE__DATA__USERID: 'sa'
         KIYOTE__DATA__PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
-        KIYOTE__DATA__INITIALCATALOG: 'PDTTS'
+        KIYOTE__DATA__INITIALCATALOG: 'TESTING'
         KIYOTE__DATA__CONNECTIONSTRINGPROVIDER: 'Builder'
       
     - name: Create Orphan Branch
