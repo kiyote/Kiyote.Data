@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+    - '.github/workflows/ci.yml'
+    - 'src/**'
+    - 'test/**'
+    - 'Kiyote.Data.sln'
+    - 'Directory.Packages.props'
+    - 'Directory.Build.props'
+    - 'nuget.config'
+  push:
+    branches: [main]
+
+jobs:
+  configure:
+    name: Configure
+    runs-on: [ubuntu-latest]
+    outputs:
+      MSSQL_SA_PASSWORD: ${{ steps.generate.outputs.MSSQL_SA_PASSWORD }}
+    steps:
+    - id: generate
+      run: |
+        echo "MSSQL_SA_PASSWORD=$(cat /dev/urandom | tr -dc _A-Za-z0-9 | head -c${1:-32})" >> $GITHUB_OUTPUT
+
+  csharp:
+    name: C#
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 10
+    needs: configure
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+        - 1433:1433
+        env:
+          ACCEPT_EULA: 'Y'
+          MSSQL_SA_PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
+    steps:
+    - uses: Brightspace/third-party-actions@actions/checkout
+
+    - name: Create Db Schema
+      shell: bash
+      run: ${{ github.workspace }}/db.sh
+      env:
+        MSSQL_SA_PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
+
+    - name: Setup .NET
+      uses: Brightspace/third-party-actions@actions/setup-dotnet
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Compile and Test
+      run: dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=cobertura
+      env:
+        KIYOTE__DATA__DATASOURCE: 'localhost'
+        KIYOTE__DATA__USERID: 'sa'
+        KIYOTE__DATA__PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
+        KIYOTE__DATA__INITIALCATALOG: 'PDTTS'
+        KIYOTE__DATA__CONNECTIONSTRINGPROVIDER: 'Builder'
+      
+    - name: Create Orphan Branch
+      shell: bash
+      run: ${{ github.workspace }}/create-orphan-branch.sh badges ${{ github.ref_name }}
+    
+    - name: Install dotnet-coverage
+      run: dotnet tool install dotnet-coverage
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+
+    - name: Generate coverage file
+      run: dotnet dotnet-coverage merge -r -o coverage.xml coverage.cobertura.xml -f cobertura
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+
+    - name: Make Coverage Badge      
+      uses: action-badges/cobertura-coverage-xml-badges@0.3.0
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      with:
+        file-name: coverage.svg
+        badge-branch: badges
+        github-token: '${{ secrets.GITHUB_TOKEN }}'
+        coverage-file-name: ./coverage.xml    

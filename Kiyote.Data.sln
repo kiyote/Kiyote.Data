@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiyote.Data.SqlServer", "src\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer\Kiyote.Data.SqlServer.csproj", "{4A765BE3-B7BA-4AC2-BA6A-7898E8760821}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{52D64A4D-74C8-4508-A783-65051C82780D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kiyote", "Kiyote", "{3365218D-5DD7-424D-9DED-FFE733EF2F27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{4CE8BC23-C00D-44DD-9D7E-95170D054D0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqLServer", "SqLServer", "{E8137726-9491-4027-A531-9E6E39318C4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiyote.Data.SqlServer.UnitTests", "test\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer.UnitTests\Kiyote.Data.SqlServer.UnitTests.csproj", "{69D45950-F6AD-40CB-A793-90439F6C1DA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3E37E015-7515-4202-818E-AAC4A2DC4FD5}"
+	ProjectSection(SolutionItems) = preProject
+		test\.runsettings = test\.runsettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kiyote", "Kiyote", "{D3C97FC4-6867-49A3-80A5-1CE56237EF6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{D72EF781-8E9F-452D-BA40-0A3E9DF9B64D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlServer", "SqlServer", "{C6D25F19-F6B9-40BA-BE17-25287DB2D1B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6CEA4345-46B3-4680-A788-06037AC8CFE3}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		global.json = global.json
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiyote.Data.SqlServer.Benchmarks", "test\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer.Benchmarks\Kiyote.Data.SqlServer.Benchmarks.csproj", "{57E5D539-D974-4887-A061-2724F7A16EC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiyote.Data.SqlServer.IntegrationTests", "test\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer.IntegrationTests\Kiyote.Data.SqlServer.IntegrationTests.csproj", "{098E448E-05B2-4D91-BB4E-B19E94BC75CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A765BE3-B7BA-4AC2-BA6A-7898E8760821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A765BE3-B7BA-4AC2-BA6A-7898E8760821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A765BE3-B7BA-4AC2-BA6A-7898E8760821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A765BE3-B7BA-4AC2-BA6A-7898E8760821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69D45950-F6AD-40CB-A793-90439F6C1DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D45950-F6AD-40CB-A793-90439F6C1DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D45950-F6AD-40CB-A793-90439F6C1DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D45950-F6AD-40CB-A793-90439F6C1DA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E5D539-D974-4887-A061-2724F7A16EC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E5D539-D974-4887-A061-2724F7A16EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E5D539-D974-4887-A061-2724F7A16EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E5D539-D974-4887-A061-2724F7A16EC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{098E448E-05B2-4D91-BB4E-B19E94BC75CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{098E448E-05B2-4D91-BB4E-B19E94BC75CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{098E448E-05B2-4D91-BB4E-B19E94BC75CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{098E448E-05B2-4D91-BB4E-B19E94BC75CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A765BE3-B7BA-4AC2-BA6A-7898E8760821} = {E8137726-9491-4027-A531-9E6E39318C4C}
+		{3365218D-5DD7-424D-9DED-FFE733EF2F27} = {52D64A4D-74C8-4508-A783-65051C82780D}
+		{4CE8BC23-C00D-44DD-9D7E-95170D054D0D} = {3365218D-5DD7-424D-9DED-FFE733EF2F27}
+		{E8137726-9491-4027-A531-9E6E39318C4C} = {4CE8BC23-C00D-44DD-9D7E-95170D054D0D}
+		{69D45950-F6AD-40CB-A793-90439F6C1DA0} = {C6D25F19-F6B9-40BA-BE17-25287DB2D1B5}
+		{D3C97FC4-6867-49A3-80A5-1CE56237EF6D} = {3E37E015-7515-4202-818E-AAC4A2DC4FD5}
+		{D72EF781-8E9F-452D-BA40-0A3E9DF9B64D} = {D3C97FC4-6867-49A3-80A5-1CE56237EF6D}
+		{C6D25F19-F6B9-40BA-BE17-25287DB2D1B5} = {D72EF781-8E9F-452D-BA40-0A3E9DF9B64D}
+		{57E5D539-D974-4887-A061-2724F7A16EC8} = {C6D25F19-F6B9-40BA-BE17-25287DB2D1B5}
+		{098E448E-05B2-4D91-BB4E-B19E94BC75CD} = {C6D25F19-F6B9-40BA-BE17-25287DB2D1B5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A33D5A2-5FB4-4E11-8B99-2C9845A39E79}
+	EndGlobalSection
+EndGlobal
