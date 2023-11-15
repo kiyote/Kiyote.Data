@@ -27,5 +27,3 @@ then
   echo "Cannot connect to SQL Server, installation aborted"
   exit $errstatus
 fi
-
-invokesql -b -i db.sql
