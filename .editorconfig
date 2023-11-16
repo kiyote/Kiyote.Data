@@ -311,6 +311,7 @@ dotnet_diagnostic.CA2300.severity   = error                 # Do not use insecur
 dotnet_diagnostic.IDE0090.severity  = none                  # Use new(...)
 dotnet_diagnostic.NUnit1028.severity = error                # The non-test method is public
 dotnet_code_quality.CA1826.exclude_ordefault_methods = true # Use property instead of Linq Enumerable method (exclude *OrDefault methods)
+dotnet_diagnostic.IDE0290.severity = none					# Use primary constructor
 
 dotnet_diagnostic.NUnit1032.additional_dispose_methods = SafeDispose
 

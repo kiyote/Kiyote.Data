@@ -37,11 +37,11 @@ public sealed class SqlServerRepositoryTests {
 		string parameterName = "name";
 		int parameterValue = 2;
 		SqlParameter parameter = new SqlParameter( parameterName, parameterValue );
-		SqlParameter[] parameters = new SqlParameter[] {
+		SqlParameter[] parameters = [
 			parameter
-		};
+		];
 		int expectedValue = 3;
-		int[] expected = new int[] { expectedValue };
+		int[] expected = [ expectedValue ];
 
 		_ = _connection
 			.Setup( c => c.CreateCommand() )
@@ -111,11 +111,11 @@ public sealed class SqlServerRepositoryTests {
 		string parameterName = "name";
 		int parameterValue = 2;
 		SqlParameter parameter = new SqlParameter( parameterName, parameterValue );
-		SqlParameter[] parameters = new SqlParameter[] {
+		SqlParameter[] parameters = [
 			parameter
-		};
+		];
 		int expectedValue = 3;
-		int[] expected = new int[] { expectedValue };
+		int[] expected = [ expectedValue ];
 
 		_ = _connection
 			.Setup( c => c.CreateCommand() )
@@ -190,11 +190,11 @@ public sealed class SqlServerRepositoryTests {
 		string parameterName = "name";
 		int parameterValue = 2;
 		SqlParameter parameter = new SqlParameter( parameterName, parameterValue );
-		SqlParameter[] parameters = new SqlParameter[] {
+		SqlParameter[] parameters = [
 			parameter
-		};
+		];
 		int expectedValue = 3;
-		int[] expected = new int[] { expectedValue };
+		int[] expected = [ expectedValue ];
 
 		_ = _connection
 			.Setup( c => c.CreateCommand() )
@@ -249,11 +249,11 @@ public sealed class SqlServerRepositoryTests {
 		string parameterName = "name";
 		int parameterValue = 2;
 		SqlParameter parameter = new SqlParameter( parameterName, parameterValue );
-		SqlParameter[] parameters = new SqlParameter[] {
+		SqlParameter[] parameters = [
 			parameter
-		};
+		];
 		int expectedValue = 3;
-		int[] expected = new int[] { expectedValue };
+		int[] expected = [ expectedValue ];
 
 		_ = _connection
 			.Setup( c => c.CreateCommand() )
@@ -312,11 +312,11 @@ public sealed class SqlServerRepositoryTests {
 		string parameterName = "name";
 		int parameterValue = 2;
 		SqlParameter parameter = new SqlParameter( parameterName, parameterValue );
-		SqlParameter[] parameters = new SqlParameter[] {
+		SqlParameter[] parameters = [
 			parameter
-		};
+		];
 		int expectedValue = 3;
-		int[] expected = new int[] { expectedValue };
+		int[] expected = [ expectedValue ];
 
 		_ = _connection
 			.Setup( c => c.CreateCommand() )
@@ -371,11 +371,11 @@ public sealed class SqlServerRepositoryTests {
 		string parameterName = "name";
 		int parameterValue = 2;
 		SqlParameter parameter = new SqlParameter( parameterName, parameterValue );
-		SqlParameter[] parameters = new SqlParameter[] {
+		SqlParameter[] parameters = [
 			parameter
-		};
+		];
 		int expectedValue = 3;
-		int[] expected = new int[] { expectedValue };
+		int[] expected = [ expectedValue ];
 
 		_ = _connection
 			.Setup( c => c.CreateCommand() )

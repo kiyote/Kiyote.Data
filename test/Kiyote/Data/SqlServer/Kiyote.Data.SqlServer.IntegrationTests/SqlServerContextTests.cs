@@ -35,12 +35,12 @@ public sealed class SqlServerContextTests {
 
 		int result = _context!.Perform(
 			sql,
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				using ISqlCommand command = conn.CreateCommand();
 				command.CommandType = System.Data.CommandType.Text;
 				command.CommandText = sql;
-				command.Parameters.Add( new Microsoft.Data.SqlClient.SqlParameter( "@ValueColumn", "VALUE" ) );
+				command.Parameters.Add( new SqlParameter( "@ValueColumn", "VALUE" ) );
 				using ISqlDataReader reader = command.ExecuteReader();
 				if( reader.Read() ) {
 					return reader.GetInt32( 0 );
@@ -86,7 +86,7 @@ public sealed class SqlServerContextTests {
 	) {
 		_ = context.PerformMaster(
 			$@"CREATE DATABASE [{catalog}];",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				ISqlCommand cmd = conn.CreateCommand();
 				cmd.CommandText = sql;
@@ -96,7 +96,7 @@ public sealed class SqlServerContextTests {
 
 		_ = context.Perform(
 			$@"CREATE TABLE TESTS ( KeyColumn int IDENTITY(1,1) NOT NULL, ValueColumn varchar(255) NOT NULL, CONSTRAINT PK_TESTS PRIMARY KEY CLUSTERED (KeyColumn) )",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				ISqlCommand cmd = conn.CreateCommand();
 				cmd.CommandText = sql;
@@ -113,7 +113,7 @@ public sealed class SqlServerContextTests {
 				ALTER DATABASE [{catalog}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 				DROP DATABASE [{catalog}];
 			",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				ISqlCommand cmd = conn.CreateCommand();
 				cmd.CommandText = sql;

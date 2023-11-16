@@ -37,7 +37,7 @@ public sealed class SqlServerContextTests {
 
 		IAsyncEnumerable<int> result = _context.QueryAsync(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			Converter,
 			( conn, converter, sql, parameters, token ) => {
 				return new int[] { expected }.ToAsyncEnumerable();
@@ -59,7 +59,7 @@ public sealed class SqlServerContextTests {
 
 		IEnumerable<int> result = _context.Query(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			Converter,
 			( conn, converter, sql, parameters ) => {
 				return new int[] { expected };
@@ -80,7 +80,7 @@ public sealed class SqlServerContextTests {
 
 		int actual = await _context.PerformAsync(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters, token ) => {
 				return Task.FromResult( expected );
 			},
@@ -98,7 +98,7 @@ public sealed class SqlServerContextTests {
 
 		int actual = _context.Perform(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				return expected;
 			}
@@ -115,7 +115,7 @@ public sealed class SqlServerContextTests {
 
 		int actual = await _context.PerformMasterAsync(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters, token ) => {
 				return Task.FromResult( expected );
 			},
@@ -133,7 +133,7 @@ public sealed class SqlServerContextTests {
 
 		int actual = _context.PerformMaster(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				return expected;
 			}
@@ -169,7 +169,7 @@ public sealed class SqlServerContextTests {
 
 		_ = Assert.ThrowsAsync<InvalidOperationException>( async () => await _context.PerformAsync(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters, token ) => {
 				return Task.FromResult( expected );
 			},
@@ -204,7 +204,7 @@ public sealed class SqlServerContextTests {
 
 		IAsyncEnumerable<int> result = _context.QueryAsync(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			Converter,
 			( conn, converter, sql, parameters, token ) => {
 				return new int[] { expected }.ToAsyncEnumerable();
@@ -240,7 +240,7 @@ public sealed class SqlServerContextTests {
 
 		IEnumerable<int> result = _context.Query(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			Converter,
 			( conn, converter, sql, parameters ) => {
 				return new int[] { expected };
@@ -275,7 +275,7 @@ public sealed class SqlServerContextTests {
 
 		_ = Assert.Throws<InvalidOperationException>( () => _context.Perform(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				return expected;
 			}
@@ -309,7 +309,7 @@ public sealed class SqlServerContextTests {
 
 		_ = Assert.ThrowsAsync<InvalidOperationException>( async () => await _context.PerformMasterAsync(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters, token ) => {
 				return Task.FromResult( expected );
 			},
@@ -342,7 +342,7 @@ public sealed class SqlServerContextTests {
 
 		_ = Assert.Throws<InvalidOperationException>( () => _context.PerformMaster(
 			"",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				return expected;
 			}
