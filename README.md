@@ -1,4 +1,4 @@
-![coverage](https://github.com/kiyote/Data/badges/.badges/main/coverage.svg?raw=true)
+![coverage](https://github.com/kiyote/Data/blob/badges/.badges/main/coverage.svg?raw=true)
 
 # Data
 
