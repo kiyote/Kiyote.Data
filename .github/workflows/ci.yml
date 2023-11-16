@@ -14,6 +14,9 @@ on:
   push:
     branches: [main]
 
+env:
+  DOTNET_VERSION: 7.0.404
+
 permissions:
   pull-requests: write
 
@@ -54,7 +57,10 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Define global.json
+      run: dotnet new globaljson --sdk-version ${{ env.DOTNET_VERSION }}
 
     - name: Compile and Test
       run: dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=cobertura
