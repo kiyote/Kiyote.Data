@@ -20,6 +20,8 @@ jobs:
     runs-on: [ubuntu-latest]
     outputs:
       MSSQL_SA_PASSWORD: ${{ steps.generate.outputs.MSSQL_SA_PASSWORD }}
+    permissions: write-all
+
     steps:
     - id: generate
       run: |
