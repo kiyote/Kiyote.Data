@@ -61,6 +61,10 @@ jobs:
         KIYOTE__DATA__SQLSERVER__INITIALCATALOG: 'TESTING'
         KIYOTE__DATA__SQLSERVER__CONNECTIONSTRINGPROVIDER: 'Builder'
           
+    - name: Create tool manifest
+      run: dotnet new tool-manifest
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+
     - name: Install dotnet-coverage
       run: dotnet tool install dotnet-coverage
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
