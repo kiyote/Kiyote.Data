@@ -8,6 +8,7 @@ namespace Kiyote.Data.SqlServer.Benchmarks;
 [MemoryDiagnoser( true )]
 public class SqlServerContextBenchmarks {
 
+	private const string TableName = "QUERY_BENCHMARK";
 	private AsyncServiceScope _scope;
 	private ISqlServerContext<BenchmarkSqlServerContextOptions>? _context;
 	private string? _catalog;
@@ -38,38 +39,27 @@ public class SqlServerContextBenchmarks {
 		_scope.Dispose();
 	}
 
+	[Params( 100, 1000, 10000 )]
+	public int RowCount { get; set; }
+
 	[Benchmark]
-	public async Task QueryAsync_1000() {
-		string sql = "SELECT * FROM BENCHMARK1000";
+	public async Task QueryAsync() {
+		string sql = $"SELECT * FROM {TableName}";
 
 		IAsyncEnumerable<int> result = _context!.QueryAsync(
 			sql,
-			Array.Empty<SqlParameter>(),
+			[],
 			Converter,
 			DoQueryAsync,
 			CancellationToken.None
 		);
-		List<int> values = new List<int>();
-		await foreach( int id in result) {
-			values.Add( id );
-		}
-	}
-
-	[Benchmark]
-	public async Task QueryAsync_10000() {
-		string sql = "SELECT * FROM BENCHMARK10000";
-
-		IAsyncEnumerable<int> result = _context!.QueryAsync(
-			sql,
-			Array.Empty<SqlParameter>(),
-			Converter,
-			DoQueryAsync,
-			CancellationToken.None
-		);
+#pragma warning disable IDE0028 // Simplify collection initialization
+// Disabled because their autofix does not work with IAsyncEnumerable
 		List<int> values = new List<int>();
 		await foreach( int id in result ) {
 			values.Add( id );
 		}
+#pragma warning restore IDE0028 // Simplify collection initialization
 	}
 
 	private static async IAsyncEnumerable<int> DoQueryAsync(
@@ -90,29 +80,16 @@ public class SqlServerContextBenchmarks {
 	}
 
 	[Benchmark]
-	public void Query_1000() {
-		string sql = "SELECT * FROM BENCHMARK1000";
+	public void Query() {
+		string sql = $"SELECT * FROM {TableName}";
 
 		IEnumerable<int> result = _context!.Query(
 			sql,
-			Array.Empty<SqlParameter>(),
+			[],
 			Converter,
 			DoQuery
 		).ToList();
 	}
-
-	[Benchmark]
-	public void Query_10000() {
-		string sql = "SELECT * FROM BENCHMARK10000";
-
-		IEnumerable<int> result = _context!.Query(
-			sql,
-			Array.Empty<SqlParameter>(),
-			Converter,
-			DoQuery
-		).ToList();
-	}
-
 
 	private IEnumerable<int> DoQuery(
 		ISqlConnection conn,
@@ -127,6 +104,60 @@ public class SqlServerContextBenchmarks {
 		while( reader.Read() ) {
 			yield return converter( reader );
 		}
+	}
+
+	[Benchmark]
+	public void Perform() {
+		string sql = $"SELECT KeyColumn FROM {TableName} WHERE KeyColumn = @Id";
+
+		int result = _context!.Perform(
+			sql,
+			[
+				new SqlParameter( "@Id", RowCount >> 1 )
+			],
+			DoPerform
+		);
+	}
+
+	private int DoPerform(
+		ISqlConnection conn,
+		string sql,
+		SqlParameter[] parameters
+	) {
+		using ISqlCommand command = conn.CreateCommand();
+		command.CommandType = System.Data.CommandType.Text;
+		command.CommandText = sql;
+		foreach( SqlParameter parameter in parameters ) {
+			command.Parameters.Add( parameter );
+		}
+		return command.ExecuteScalar<int>();
+	}
+
+	[Benchmark]
+	public void PerformAsync() {
+		string sql = $"SELECT KeyColumn FROM {TableName} WHERE KeyColumn = @Id";
+
+		int result = _context!.Perform(
+			sql,
+			[
+				new SqlParameter( "@Id", RowCount >> 1 )
+			],
+			DoPerformAsync
+		);
+	}
+
+	private int DoPerformAsync(
+		ISqlConnection conn,
+		string sql,
+		SqlParameter[] parameters
+	) {
+		using ISqlCommand command = conn.CreateCommand();
+		command.CommandType = System.Data.CommandType.Text;
+		command.CommandText = sql;
+		foreach( SqlParameter parameter in parameters ) {
+			command.Parameters.Add( parameter );
+		}
+		return command.ExecuteScalar<int>();
 	}
 
 	/*
@@ -337,7 +368,7 @@ public class SqlServerContextBenchmarks {
 	private void CreateDatabase() {
 		_ = _context!.PerformMaster(
 			$@"CREATE DATABASE [{_catalog}];",
-			Array.Empty<SqlParameter>(),
+			[],
 			( conn, sql, parameters ) => {
 				ISqlCommand cmd = conn.CreateCommand();
 				cmd.CommandText = sql;
@@ -346,17 +377,8 @@ public class SqlServerContextBenchmarks {
 			});
 
 		_ = _context!.Perform(
-			$@"CREATE TABLE BENCHMARK1000 ( KeyColumn int IDENTITY(1,1) NOT NULL, ValueColumn varchar(255) NOT NULL, CONSTRAINT PK_BENCHMARK1000 PRIMARY KEY CLUSTERED (KeyColumn) )",
-			Array.Empty<SqlParameter>(),
-			( conn, sql, parameters ) => {
-				ISqlCommand cmd = conn.CreateCommand();
-				cmd.CommandText = sql;
-				return cmd.ExecuteNonQuery();
-			});
-
-		_ = _context!.Perform(
-			$@"CREATE TABLE BENCHMARK10000 ( KeyColumn int IDENTITY(1,1) NOT NULL, ValueColumn varchar(255) NOT NULL, CONSTRAINT PK_BENCHMARK10000 PRIMARY KEY CLUSTERED (KeyColumn) )",
-			Array.Empty<SqlParameter>(),
+			$@"CREATE TABLE {TableName} ( KeyColumn int IDENTITY(1,1) NOT NULL, ValueColumn varchar(255) NOT NULL, CONSTRAINT PK_{TableName} PRIMARY KEY CLUSTERED (KeyColumn) )",
+			[],
 			( conn, sql, parameters ) => {
 				ISqlCommand cmd = conn.CreateCommand();
 				cmd.CommandText = sql;
@@ -367,10 +389,10 @@ public class SqlServerContextBenchmarks {
 	public void DeleteDatabase() {
 		_ = _context!.PerformMaster(
 			$@"
-					ALTER DATABASE [{_catalog}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-					DROP DATABASE [{_catalog}];
-				",
-			Array.Empty<SqlParameter>(),
+				ALTER DATABASE [{_catalog}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+				DROP DATABASE [{_catalog}];
+			",
+			[],
 			( conn, sql, parameters ) => {
 				ISqlCommand cmd = conn.CreateCommand();
 				cmd.CommandText = sql;
@@ -380,42 +402,19 @@ public class SqlServerContextBenchmarks {
 	}
 
 	private void FillDatabase() {
-		string sql = "INSERT INTO BENCHMARK1000 ( ValueColumn ) OUTPUT Inserted.KeyColumn VALUES ( @ValueColumn )";
+		string sql = $"INSERT INTO {TableName} ( ValueColumn ) OUTPUT Inserted.KeyColumn VALUES ( @ValueColumn )";
 
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < RowCount; i++) {
 			int result = _context!.Perform(
 				sql,
-				new SqlParameter[] {
-					new Microsoft.Data.SqlClient.SqlParameter( "@ValueColumn", "VALUE" )
-				},
+				[
+					new SqlParameter( "@ValueColumn", "VALUE" )
+				],
 				( conn, sql, parameters ) => {
 					using ISqlCommand command = conn.CreateCommand();
 					command.CommandType = System.Data.CommandType.Text;
 					command.CommandText = sql;
 					foreach (SqlParameter parameter in parameters) {
-						command.Parameters.Add( parameter );
-					}
-					using ISqlDataReader reader = command.ExecuteReader();
-					if( reader.Read() ) {
-						return reader.GetInt32( 0 );
-					}
-					throw new InvalidOperationException();
-				});
-		}
-
-		sql = "INSERT INTO BENCHMARK10000 ( ValueColumn ) OUTPUT Inserted.KeyColumn VALUES ( @ValueColumn )";
-
-		for( int i = 0; i < 10000; i++ ) {
-			int result = _context!.Perform(
-				sql,
-				new SqlParameter[] {
-					new Microsoft.Data.SqlClient.SqlParameter( "@ValueColumn", "VALUE" )
-				},
-				( conn, sql, parameters ) => {
-					using ISqlCommand command = conn.CreateCommand();
-					command.CommandType = System.Data.CommandType.Text;
-					command.CommandText = sql;
-					foreach( SqlParameter parameter in parameters ) {
 						command.Parameters.Add( parameter );
 					}
 					using ISqlDataReader reader = command.ExecuteReader();

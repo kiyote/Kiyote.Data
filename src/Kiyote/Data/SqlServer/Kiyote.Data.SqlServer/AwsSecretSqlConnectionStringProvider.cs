@@ -66,7 +66,7 @@ internal sealed class AwsSecretSqlConnectionStringProvider<T> : ISqlConnectionSt
 			_ = await ( this as ISqlConnectionStringProvider<T> ).GetConnectionStringAsync( cancellationToken );
 
 			int catalogStart = _connectionString.IndexOf( "Initial Catalog", StringComparison.OrdinalIgnoreCase );
-			int catalogEnd = _connectionString.IndexOf( ";", catalogStart, StringComparison.OrdinalIgnoreCase );
+			int catalogEnd = _connectionString.IndexOf( ';', catalogStart );
 			_masterConnectionString = _connectionString.Remove( catalogStart, ( catalogEnd - catalogStart + 1 ) );
 		}
 

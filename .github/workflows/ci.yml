@@ -15,7 +15,7 @@ on:
     branches: [main]
 
 env:
-  DOTNET_VERSION: 7.0.404
+  DOTNET_VERSION: 8.0.100
 
 permissions:
   pull-requests: write

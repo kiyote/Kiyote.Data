@@ -6,8 +6,7 @@
 	</PropertyGroup>	
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<LangVersion>10.0</LangVersion>
+		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
@@ -22,10 +21,4 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>DEBUG;TRACE</DefineConstants>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<AssemblyAttribute Include="System.CLSCompliantAttribute">
-			<_Parameter1>true</_Parameter1>
-		</AssemblyAttribute>
-	</ItemGroup>
 </Project>

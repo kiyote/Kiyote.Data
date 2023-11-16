@@ -34,14 +34,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		db.sh = db.sh
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
-		global.json = global.json
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiyote.Data.SqlServer.Benchmarks", "test\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer.Benchmarks\Kiyote.Data.SqlServer.Benchmarks.csproj", "{57E5D539-D974-4887-A061-2724F7A16EC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiyote.Data.SqlServer.IntegrationTests", "test\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer.IntegrationTests\Kiyote.Data.SqlServer.IntegrationTests.csproj", "{098E448E-05B2-4D91-BB4E-B19E94BC75CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiyote.Data.SqlServer.IntegrationTests", "test\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer.IntegrationTests\Kiyote.Data.SqlServer.IntegrationTests.csproj", "{098E448E-05B2-4D91-BB4E-B19E94BC75CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
