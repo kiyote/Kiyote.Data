@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
+		<FCCExcludeFromCodeCoverage/>
 	</PropertyGroup>
 
 	<ItemGroup>

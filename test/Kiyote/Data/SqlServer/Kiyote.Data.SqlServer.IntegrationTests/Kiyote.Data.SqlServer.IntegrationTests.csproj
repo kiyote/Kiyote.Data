@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
+		<FCCExcludeFromCodeCoverage/>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -30,5 +31,4 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\..\..\src\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer\Kiyote.Data.SqlServer.csproj" />
 	</ItemGroup>
-
 </Project>

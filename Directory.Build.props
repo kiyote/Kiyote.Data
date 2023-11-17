@@ -21,4 +21,15 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>DEBUG;TRACE</DefineConstants>
 	</PropertyGroup>
+
+	<PropertyGroup>
+		<FineCodeCoverage>
+			<Enabled>
+				True
+			</Enabled>
+			<ModulePathsExclude>
+				Tests.dll$
+			</ModulePathsExclude>
+		</FineCodeCoverage>
+	</PropertyGroup>
 </Project>
