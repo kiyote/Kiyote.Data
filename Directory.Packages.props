@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="AWSSDK.SecretsManager" Version="3.7.300.3" />
+    <PackageVersion Include="AWSSDK.SecretsManager" Version="3.7.302.3" />
     <PackageVersion Include="BenchmarkDotNet" Version="0.13.10" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
