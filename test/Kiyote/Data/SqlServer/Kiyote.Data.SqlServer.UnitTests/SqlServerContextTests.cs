@@ -47,8 +47,8 @@ public sealed class SqlServerContextTests {
 
 		// If you don't iterate over the entire list the connection isn't closed
 		// by the time we check the expectations in TearDown
-		int actual = (await result.ToListAsync()).First();
-		Assert.AreEqual( expected, actual );
+		int actual = ( await result.ToListAsync() ).First();
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -69,7 +69,7 @@ public sealed class SqlServerContextTests {
 		// If you don't iterate over the entire list the connection isn't closed
 		// by the time we check the expectations in TearDown
 		int actual = result.ToList().First();
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -87,7 +87,7 @@ public sealed class SqlServerContextTests {
 			CancellationToken.None
 		);
 
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -104,7 +104,7 @@ public sealed class SqlServerContextTests {
 			}
 		);
 
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -122,7 +122,7 @@ public sealed class SqlServerContextTests {
 			CancellationToken.None
 		);
 
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -139,7 +139,7 @@ public sealed class SqlServerContextTests {
 			}
 		);
 
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -354,7 +354,7 @@ public sealed class SqlServerContextTests {
 	) {
 		string connectionString = GetConnectionString();
 
-		if (setupMaster) {
+		if( setupMaster ) {
 			_ = _connectionStringProvider
 				.Setup( csp => csp.GetMasterConnectionStringAsync( It.IsAny<CancellationToken>() ) )
 				.ReturnsAsync( connectionString );

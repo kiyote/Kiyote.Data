@@ -36,7 +36,7 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 		);
 		string actual = _provider.GetConnectionString();
 
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -54,7 +54,7 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 		);
 		string actual = await _provider.GetConnectionStringAsync( CancellationToken.None );
 
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -72,7 +72,7 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 		);
 		string actual = _provider.GetMasterConnectionString();
 
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
@@ -90,7 +90,7 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 		);
 		string actual = await _provider.GetMasterConnectionStringAsync( CancellationToken.None );
 
-		Assert.AreEqual( expected, actual );
+		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]

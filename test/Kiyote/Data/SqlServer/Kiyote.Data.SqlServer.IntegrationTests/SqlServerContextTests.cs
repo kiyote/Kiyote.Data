@@ -50,7 +50,7 @@ public sealed class SqlServerContextTests {
 			}
 		);
 
-		Assert.AreNotEqual( 0, result );
+		Assert.That( result, Is.Not.EqualTo( 0 ) );
 	}
 
 	private static string ConfigureDatabase(
