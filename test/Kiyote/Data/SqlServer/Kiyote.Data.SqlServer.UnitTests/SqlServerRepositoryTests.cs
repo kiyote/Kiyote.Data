@@ -91,7 +91,7 @@ public sealed class SqlServerRepositoryTests {
 				SqlParameter[],
 				Func<ISqlDataReader, int>,
 				Func<ISqlConnection, Func<ISqlDataReader, int>, string, SqlParameter[], IEnumerable<int>>
-			> ( (sql, parameters, converter, action) => {
+			>( ( sql, parameters, converter, action ) => {
 				List<int> values = action( _connection.Object, converter, sql, parameters ).ToList();
 			} )
 			.Returns( expected );
@@ -102,7 +102,7 @@ public sealed class SqlServerRepositoryTests {
 			parameters
 		).ToList();
 
-		CollectionAssert.AreEquivalent( expected, actual );
+		Assert.That( actual, Is.EquivalentTo( expected ) );
 	}
 
 	[Test]
@@ -143,7 +143,7 @@ public sealed class SqlServerRepositoryTests {
 			.ReturnsAsync( _reader.Object );
 
 		_ = _reader
-			.SetupSequence( r => r.ReadAsync( It.IsAny<CancellationToken>()) )
+			.SetupSequence( r => r.ReadAsync( It.IsAny<CancellationToken>() ) )
 			.ReturnsAsync( true )
 			.ReturnsAsync( false );
 
@@ -178,10 +178,10 @@ public sealed class SqlServerRepositoryTests {
 			sql,
 			Converter,
 			CancellationToken.None,
-			parameters			
+			parameters
 		).ToListAsync( CancellationToken.None );
 
-		CollectionAssert.AreEquivalent( expected, actual );
+		Assert.That( actual, Is.EquivalentTo( expected ) );
 	}
 
 	[Test]
@@ -240,7 +240,7 @@ public sealed class SqlServerRepositoryTests {
 			parameters
 		);
 
-		Assert.AreEqual( expectedValue, actual );
+		Assert.That( actual, Is.EqualTo( expectedValue ) );
 	}
 
 	[Test]
@@ -303,7 +303,7 @@ public sealed class SqlServerRepositoryTests {
 			parameters
 		);
 
-		Assert.AreEqual( expectedValue, actual );
+		Assert.That( actual, Is.EqualTo( expectedValue ) );
 	}
 
 	[Test]
@@ -362,7 +362,7 @@ public sealed class SqlServerRepositoryTests {
 			parameters
 		);
 
-		Assert.AreEqual( expectedValue, actual );
+		Assert.That( actual, Is.EqualTo( expectedValue ) );
 	}
 
 	[Test]
@@ -425,7 +425,7 @@ public sealed class SqlServerRepositoryTests {
 			parameters
 		);
 
-		Assert.AreEqual( expectedValue, actual );
+		Assert.That( actual, Is.EqualTo( expectedValue ) );
 	}
 
 	private static int Converter(
