@@ -68,6 +68,8 @@ public sealed class SqlServerContextTests {
 				// Kiyote:Data:SqlServer:Password
 
 			} )
+			// Or set the values in an appsettings.json file
+			.AddJsonFile( "testsettings.json", true )
 			.AddEnvironmentVariables()
 			.Build();
 
