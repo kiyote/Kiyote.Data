@@ -19,6 +19,7 @@ env:
 
 permissions:
   pull-requests: write
+  contents: write
 
 jobs:
   configure:
@@ -80,7 +81,7 @@ jobs:
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
     - name: Generate coverage file
-      run: dotnet dotnet-coverage merge -r -o coverage.xml coverage.cobertura.xml -f cobertura
+      run: dotnet dotnet-coverage merge -o coverage.xml **/coverage.cobertura.xml -f cobertura
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
     - name: Create Orphan Branch

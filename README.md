@@ -39,7 +39,20 @@ LaunchCount=1  WarmupCount=10
 
 # Notes
 
+
 Github action failing with permission denied?
 ```
-git update-index --chmod=+x ./db.sh
+git update-index --chmod=+x ./create-orphan-branch.sh
 ```
+
+Still failing?  Try running the `./create-orphan-branch.sh` locally once.
+
+
+Coverage badge failing to be pushed?
+
+Give the workflow the `contents: write` permission.
+
+
+Coverage showing as 0%
+
+Add the `coverlet.msbuild` package to your test project.
