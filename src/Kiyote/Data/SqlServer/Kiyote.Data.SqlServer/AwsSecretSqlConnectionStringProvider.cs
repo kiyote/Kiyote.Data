@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
-using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
+using Kiyote.AWS.SecretsManager;
 
 namespace Kiyote.Data.SqlServer;
 
@@ -8,13 +8,13 @@ internal sealed class AwsSecretSqlConnectionStringProvider<T> : ISqlConnectionSt
 
 	private sealed record ConnectionStringSecret( string ConnectionString );
 
-	private readonly IAmazonSecretsManager _secretsManager;
+	private readonly IAmazonSecretsManager<T> _secretsManager;
 	private readonly IOptions<T> _options;
 	private string _connectionString;
 	private string _masterConnectionString;
 
 	public AwsSecretSqlConnectionStringProvider(
-		IAmazonSecretsManager secretsManager,
+		IAmazonSecretsManager<T> secretsManager,
 		IOptions<T> options
 	) {
 		_secretsManager = secretsManager;

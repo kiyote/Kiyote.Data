@@ -56,6 +56,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DynamoDb", "DynamoDb", "{9D0A26D7-7527-4184-B403-E135F82AA713}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiyote.Data.DynamoDb", "src\Kiyote\Data\DynamoDb\Kiyote.Data.DynamoDb\Kiyote.Data.DynamoDb.csproj", "{45659DD9-FBD2-46E7-B400-D1918809197A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +86,10 @@ Global
 		{1892C5BE-A489-4876-93E8-678E252299E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1892C5BE-A489-4876-93E8-678E252299E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1892C5BE-A489-4876-93E8-678E252299E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45659DD9-FBD2-46E7-B400-D1918809197A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45659DD9-FBD2-46E7-B400-D1918809197A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45659DD9-FBD2-46E7-B400-D1918809197A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45659DD9-FBD2-46E7-B400-D1918809197A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +108,8 @@ Global
 		{1892C5BE-A489-4876-93E8-678E252299E9} = {C6D25F19-F6B9-40BA-BE17-25287DB2D1B5}
 		{B75BBB23-77BE-4E5B-8211-2F10B9447F4E} = {6CEA4345-46B3-4680-A788-06037AC8CFE3}
 		{3E0BB799-9E49-429F-9993-D0EA9EB26394} = {B75BBB23-77BE-4E5B-8211-2F10B9447F4E}
+		{9D0A26D7-7527-4184-B403-E135F82AA713} = {4CE8BC23-C00D-44DD-9D7E-95170D054D0D}
+		{45659DD9-FBD2-46E7-B400-D1918809197A} = {9D0A26D7-7527-4184-B403-E135F82AA713}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A33D5A2-5FB4-4E11-8B99-2C9845A39E79}

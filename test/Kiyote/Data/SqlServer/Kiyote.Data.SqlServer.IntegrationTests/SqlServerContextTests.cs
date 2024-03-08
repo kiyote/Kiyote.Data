@@ -61,12 +61,7 @@ public sealed class SqlServerContextTests {
 			.AddInMemoryCollection( new Dictionary<string, string?>() {
 				[ "Kiyote:Data:SqlServer:InitialCatalog" ] = catalog,
 				[ "Kiyote:Data:SqlServer:DataSource" ] = "localhost",
-				[ "Kiyote:Data:SqlServer:ConnectionStringProvider" ] = "Builder"
-				// !!!Be sure to set these values in your environment before
-				// running these tests!!!
-				// Kiyote:Data:SqlServer:UserID
-				// Kiyote:Data:SqlServer:Password
-
+				[ "Kiyote:Data:SqlServer:ConnectionStringProvider" ] = SqlServerContextOptions.IntegratedSecurityConnectionStringProvider
 			} )
 			// Or set the values in an appsettings.json file
 			.AddJsonFile( "testsettings.json", true )
