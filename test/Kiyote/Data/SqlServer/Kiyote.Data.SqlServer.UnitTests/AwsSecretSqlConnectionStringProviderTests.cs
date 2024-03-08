@@ -1,5 +1,5 @@
-﻿using Amazon.SecretsManager;
-using Amazon.SecretsManager.Model;
+﻿using Amazon.SecretsManager.Model;
+using Kiyote.AWS.SecretsManager;
 using Microsoft.Extensions.Options;
 
 namespace Kiyote.Data.SqlServer.UnitTests;
@@ -8,13 +8,13 @@ namespace Kiyote.Data.SqlServer.UnitTests;
 public sealed class AwsSecretSqlConnectionStringProviderTests {
 
 	private Mock<IOptions<TestSqlServerContextOptions>> _options;
-	private Mock<IAmazonSecretsManager> _secretsManager;
+	private Mock<IAmazonSecretsManager<TestSqlServerContextOptions>> _secretsManager;
 	private ISqlConnectionStringProvider<TestSqlServerContextOptions> _provider;
 
 	[SetUp]
 	public void SetUp() {
 		_options = new Mock<IOptions<TestSqlServerContextOptions>>( MockBehavior.Strict );
-		_secretsManager = new Mock<IAmazonSecretsManager>( MockBehavior.Strict );
+		_secretsManager = new Mock<IAmazonSecretsManager<TestSqlServerContextOptions>>( MockBehavior.Strict );
 		_provider = new AwsSecretSqlConnectionStringProvider<TestSqlServerContextOptions>(
 			_secretsManager.Object,
 			_options.Object

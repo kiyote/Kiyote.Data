@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<PackageReference Include="AWSSDK.SecretsManager" />
+		<PackageReference Include="Kiyote.AWS" />
+		<PackageReference Include="Microsoft.Extensions.Options" />
 		<PackageReference Include="ConfigureAwait.Fody">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
@@ -8,8 +10,5 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Kiyote.AWS" />
-		<PackageReference Include="Microsoft.Data.SqlClient" />
-		<PackageReference Include="Microsoft.Extensions.Options" />
 	</ItemGroup>
 </Project>

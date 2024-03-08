@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Kiyote.AWS.SecretsManager;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kiyote.Data.SqlServer;
@@ -29,6 +30,7 @@ public static class ExtensionMethods {
 	public static IServiceCollection AddAwsSecretSqlServer<T>(
 		this IServiceCollection services
 	) where T : SqlServerContextOptions {
+		_ = services.AddSecretsManager<T>();
 		_ = services.AddSingleton<ISqlConnectionStringProvider<T>, AwsSecretSqlConnectionStringProvider<T>>();
 		_ = services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
 		_ = services.AddSingleton<ISqlServerContext<T>, SqlServerContext<T>>();
