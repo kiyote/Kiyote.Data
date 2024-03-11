@@ -5,10 +5,15 @@
 # Setup
 
 Prior to running the tests, please be sure a SQLServer instance is running locally.
-Additionally, set the environment variables `Kiyote:Data:SqlServer:UserID` and
+Additionally, set the environment variable `Kiyote:Data:SqlServer:ConnectionStringProvider` with
+the value `Builder` ,and the environment variables `Kiyote:Data:SqlServer:UserID` and
 `Kiyote:Data:SqlServer:Password` to provide the credentials necessary to connect to
 the instance.  If using Docker, this is as simple as:
 `docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=yourStrong(!)Password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest`
+
+Alternatively, if SQServer is already installed locally, you do not require any
+environment variables as it will assume a `ConnectionStringProvider` setting of `Integrated` and
+will use your local user account to access your SQLServer instance.
 
 # Benchmarks
 
