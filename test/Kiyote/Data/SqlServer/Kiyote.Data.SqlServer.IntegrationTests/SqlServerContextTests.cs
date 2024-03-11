@@ -12,10 +12,10 @@ public sealed class SqlServerContextTests {
 
 	[SetUp]
 	public void Setup() {
-		_catalog = Guid.NewGuid().ToString( "N" );
-
 		IServiceCollection serviceCollection = new ServiceCollection();
-		IConfiguration configuration = BuildConfiguration( _catalog );
+		string name = Guid.NewGuid().ToString( "N" );
+		IConfiguration configuration = BuildConfiguration( name ); 
+		_catalog = configuration[ "Kiyote:Data:SqlServer:InitialCatalog" ] ?? name;
 
 		_ = serviceCollection.AddSqlServer<TestSqlServerContextOptions>(
 			(opts) => {
