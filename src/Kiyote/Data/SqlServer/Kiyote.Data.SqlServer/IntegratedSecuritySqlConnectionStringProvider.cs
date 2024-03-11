@@ -2,25 +2,31 @@
 
 internal sealed class IntegratedSecuritySqlConnectionStringProvider<T> : ISqlConnectionStringProvider<T> where T : SqlServerContextOptions {
 
-	private readonly IOptions<T> _options;
+	private readonly string _dataSource;
+	private readonly string _initialCatalog;
 	private string _connectionString;
 	private string _masterConnectionString;
 
 	public IntegratedSecuritySqlConnectionStringProvider(
-		IOptions<T> options
+		T options
 	) {
-		_options = options;
+		if( !string.IsNullOrWhiteSpace( options.ConnectionStringProvider )
+			&& options.ConnectionStringProvider != SqlServerContextOptions.IntegratedSecurityConnectionStringProvider
+		) {
+			throw new ArgumentException( $"{nameof( options.ConnectionStringProvider )} is not configured for this provider.", nameof( options ) );
+		}
+		_dataSource = options.DataSource ?? throw new ArgumentException( $"{nameof( options.DataSource )} must not be empty.", nameof( options ) );
+		_initialCatalog = options.InitialCatalog ?? throw new ArgumentException( $"{nameof( options.InitialCatalog )} must not be empty.", nameof( options ) );
 		_connectionString = "";
 		_masterConnectionString = "";
 	}
 
 	string ISqlConnectionStringProvider<T>.GetConnectionString() {
 		if( string.IsNullOrWhiteSpace( _connectionString ) ) {
-			T opts = _options.Value;
 			SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder {
-				DataSource = opts.DataSource,
+				DataSource = _dataSource,
 				IntegratedSecurity = true,
-				InitialCatalog = opts.InitialCatalog,
+				InitialCatalog = _initialCatalog,
 				Encrypt = true,
 				TrustServerCertificate = true
 			};
@@ -38,9 +44,8 @@ internal sealed class IntegratedSecuritySqlConnectionStringProvider<T> : ISqlCon
 
 	string ISqlConnectionStringProvider<T>.GetMasterConnectionString() {
 		if( string.IsNullOrWhiteSpace( _connectionString ) ) {
-			T opts = _options.Value;
 			SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder {
-				DataSource = opts.DataSource,
+				DataSource = _dataSource,
 				IntegratedSecurity = true,
 				Encrypt = true,
 				TrustServerCertificate = true

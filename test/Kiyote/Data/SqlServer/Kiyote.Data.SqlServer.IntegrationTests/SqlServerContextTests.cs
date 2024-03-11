@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Kiyote.Data.SqlServer.IntegrationTests;
 
@@ -12,7 +13,16 @@ public sealed class SqlServerContextTests {
 	[SetUp]
 	public void Setup() {
 		IServiceCollection serviceCollection = new ServiceCollection();
-		_catalog = ConfigureDatabase( serviceCollection, Guid.NewGuid().ToString( "N" ) );
+		string name = Guid.NewGuid().ToString( "N" );
+		IConfiguration configuration = BuildConfiguration( name ); 
+		_catalog = configuration[ "Kiyote:Data:SqlServer:InitialCatalog" ] ?? name;
+
+		_ = serviceCollection.AddSqlServer<TestSqlServerContextOptions>(
+			(opts) => {
+				configuration.Bind( "Kiyote:Data:SqlServer", opts );
+			}
+		);
+
 		IServiceProvider services = serviceCollection.BuildServiceProvider();
 
 		_scope = services.CreateScope();
@@ -53,34 +63,24 @@ public sealed class SqlServerContextTests {
 		Assert.That( result, Is.Not.EqualTo( 0 ) );
 	}
 
-	private static string ConfigureDatabase(
-		IServiceCollection services,
+	private static IConfigurationRoot BuildConfiguration(
 		string catalog
 	) {
 		IConfigurationRoot configuration = new ConfigurationBuilder()
+			// Or set the values in an testsettings.json file
 			.AddInMemoryCollection( new Dictionary<string, string?>() {
 				[ "Kiyote:Data:SqlServer:InitialCatalog" ] = catalog,
 				[ "Kiyote:Data:SqlServer:DataSource" ] = "localhost",
 				[ "Kiyote:Data:SqlServer:ConnectionStringProvider" ] = SqlServerContextOptions.IntegratedSecurityConnectionStringProvider
 			} )
-			// Or set the values in an appsettings.json file
+			// This is used by the CI system to provide credentials during the run
 			.AddJsonFile( "testsettings.json", true )
 			.AddEnvironmentVariables()
 			.Build();
 
-		IConfigurationSection config = configuration.GetSection( "Kiyote" ).GetSection( "Data" ).GetSection( "SqlServer" );
-		_ = services.Configure<TestSqlServerContextOptions>( config );
-		string? connectionStringProvider = config[ nameof( SqlServerContextOptions.ConnectionStringProvider ) ];
-		if( connectionStringProvider == SqlServerContextOptions.BuilderConnectionStringProvider ) {
-			_ = services.AddBuilderSqlServer<TestSqlServerContextOptions>();
-		} else if( connectionStringProvider == SqlServerContextOptions.IntegratedSecurityConnectionStringProvider ) {
-			_ = services.AddIntegratedSecuritySqlServer<TestSqlServerContextOptions>();
-		} else {
-			_ = services.AddAwsSecretSqlServer<TestSqlServerContextOptions>();
-		}
-
-		return config[ "InitialCatalog" ] ?? catalog;
+		return configuration;
 	}
+
 
 	private static void CreateDatabase(
 		ISqlServerContext<TestSqlServerContextOptions> context,

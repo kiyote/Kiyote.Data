@@ -9,16 +9,21 @@ internal sealed class AwsSecretSqlConnectionStringProvider<T> : ISqlConnectionSt
 	private sealed record ConnectionStringSecret( string ConnectionString );
 
 	private readonly IAmazonSecretsManager<T> _secretsManager;
-	private readonly IOptions<T> _options;
+	private readonly string _connectionStringSecretName;
 	private string _connectionString;
 	private string _masterConnectionString;
 
 	public AwsSecretSqlConnectionStringProvider(
 		IAmazonSecretsManager<T> secretsManager,
-		IOptions<T> options
+		T options
 	) {
 		_secretsManager = secretsManager;
-		_options = options;
+		if( !string.IsNullOrWhiteSpace( options.ConnectionStringProvider )
+			&& options.ConnectionStringProvider != SqlServerContextOptions.AwsSecretConnectionStringProvider
+		) {
+			throw new ArgumentException( $"{options.ConnectionStringProvider} is not configured for this provider.", nameof( options ) );
+		}
+		_connectionStringSecretName = options.ConnectionStringSecretName ?? "";
 		_connectionString = "";
 		_masterConnectionString = "";
 	}
@@ -27,10 +32,9 @@ internal sealed class AwsSecretSqlConnectionStringProvider<T> : ISqlConnectionSt
 		CancellationToken cancellationToken
 	) {
 		if( string.IsNullOrWhiteSpace( _connectionString ) ) {
-			T opts = _options.Value;
 
 			GetSecretValueRequest request = new GetSecretValueRequest {
-				SecretId = opts.ConnectionStringSecretName
+				SecretId = _connectionStringSecretName
 			};
 			GetSecretValueResponse response = await _secretsManager
 				.GetSecretValueAsync( request, cancellationToken );

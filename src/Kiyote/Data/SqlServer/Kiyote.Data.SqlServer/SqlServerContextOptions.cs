@@ -17,8 +17,9 @@ namespace Kiyote.Data.SqlServer;
 /// two SqlServerContextOptions<T> would need to be defined with the necessary
 /// configuration settings supplied in two different instances of T types.
 /// </remarks>
+///
 [ExcludeFromCodeCoverage( Justification = "POCO" )]
-public abstract class SqlServerContextOptions {
+public class SqlServerContextOptions {
 
 	public const string BuilderConnectionStringProvider = "Builder";
 	public const string IntegratedSecurityConnectionStringProvider = "Integrated";
