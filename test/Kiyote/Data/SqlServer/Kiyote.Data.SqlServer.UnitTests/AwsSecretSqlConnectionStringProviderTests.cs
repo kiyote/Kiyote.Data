@@ -7,18 +7,12 @@ namespace Kiyote.Data.SqlServer.UnitTests;
 [TestFixture]
 public sealed class AwsSecretSqlConnectionStringProviderTests {
 
-	private TestSqlServerContextOptions _options;
 	private Mock<IAmazonSecretsManager<TestSqlServerContextOptions>> _secretsManager;
-	private ISqlConnectionStringProvider<TestSqlServerContextOptions> _provider;
+	private ISqlConnectionStringProvider<TestSqlServerContextOptions>? _provider;
 
 	[SetUp]
 	public void SetUp() {
-		_options = new TestSqlServerContextOptions();
 		_secretsManager = new Mock<IAmazonSecretsManager<TestSqlServerContextOptions>>( MockBehavior.Strict );
-		_provider = new AwsSecretSqlConnectionStringProvider<TestSqlServerContextOptions>(
-			_secretsManager.Object,
-			_options
-		);
 	}
 
 	[TearDown]
@@ -43,7 +37,7 @@ public sealed class AwsSecretSqlConnectionStringProviderTests {
 			) )
 			.ReturnsAsync( response );
 
-		string actual = await _provider.GetConnectionStringAsync( CancellationToken.None );
+		string actual = await _provider!.GetConnectionStringAsync( CancellationToken.None );
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -65,7 +59,7 @@ public sealed class AwsSecretSqlConnectionStringProviderTests {
 			) )
 			.ReturnsAsync( response );
 
-		_ = Assert.ThrowsAsync<InvalidOperationException>( () => _provider.GetConnectionStringAsync( CancellationToken.None ) );
+		_ = Assert.ThrowsAsync<InvalidOperationException>( () => _provider!.GetConnectionStringAsync( CancellationToken.None ) );
 	}
 
 	[Test]
@@ -84,7 +78,7 @@ public sealed class AwsSecretSqlConnectionStringProviderTests {
 			) )
 			.ReturnsAsync( response );
 
-		_ = Assert.ThrowsAsync<InvalidOperationException>( () => _provider.GetConnectionStringAsync( CancellationToken.None ) );
+		_ = Assert.ThrowsAsync<InvalidOperationException>( () => _provider!.GetConnectionStringAsync( CancellationToken.None ) );
 	}
 
 	[Test]
@@ -104,7 +98,7 @@ public sealed class AwsSecretSqlConnectionStringProviderTests {
 			) )
 			.ReturnsAsync( response );
 
-		string actual = _provider.GetConnectionString();
+		string actual = _provider!.GetConnectionString();
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -126,7 +120,7 @@ public sealed class AwsSecretSqlConnectionStringProviderTests {
 			) )
 			.ReturnsAsync( response );
 
-		string actual = await _provider.GetMasterConnectionStringAsync( CancellationToken.None );
+		string actual = await _provider!.GetMasterConnectionStringAsync( CancellationToken.None );
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -148,25 +142,32 @@ public sealed class AwsSecretSqlConnectionStringProviderTests {
 			) )
 			.ReturnsAsync( response );
 
-		string actual = _provider.GetMasterConnectionString();
+		string actual = _provider!.GetMasterConnectionString();
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
 	public void RefreshConnectionString_ValidProvider_MethodDoesNotFail() {
-		Assert.DoesNotThrow( () => _provider.RefreshConnectionString() );
+		Assert.DoesNotThrow( () => _provider!.RefreshConnectionString() );
 	}
 
 	[Test]
 	public void RefreshConnectionStringAsync_ValidProvider_MethodDoesNotFail() {
-		Assert.DoesNotThrowAsync( async () => await _provider.RefreshConnectionStringAsync( CancellationToken.None ) );
+		Assert.DoesNotThrowAsync( async () => await _provider!.RefreshConnectionStringAsync( CancellationToken.None ) );
 	}
 
 	private void SetupOptions(
 		string secretName
 	) {
-		_options.ConnectionStringSecretName = secretName;
+		var options = new TestSqlServerContextOptions {
+			ConnectionStringProvider = SqlServerContextOptions.AwsSecretConnectionStringProvider,
+			ConnectionStringSecretName = secretName
+		};
+		_provider = new AwsSecretSqlConnectionStringProvider<TestSqlServerContextOptions>(
+			_secretsManager.Object,
+			options
+		);
 	}
 
 	private static string MakeConnectionString(

@@ -3,16 +3,7 @@
 [TestFixture]
 public sealed class BuilderSqlConnectionStringProviderTests {
 
-	private TestSqlServerContextOptions _options;
-	private ISqlConnectionStringProvider<TestSqlServerContextOptions> _provider;
-
-	[SetUp]
-	public void SetUp() {
-		_options = new TestSqlServerContextOptions();
-		_provider = new BuilderSqlConnectionStringProvider<TestSqlServerContextOptions>(
-			_options
-		);
-	}
+	private ISqlConnectionStringProvider<TestSqlServerContextOptions>? _provider;
 
 	[Test]
 	public void GetConnectionString_ValidConnectionString_ConnectionStringReturned() {
@@ -33,7 +24,7 @@ public sealed class BuilderSqlConnectionStringProviderTests {
 			password,
 			catalog
 		);
-		string actual = _provider.GetConnectionString();
+		string actual = _provider!.GetConnectionString();
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -57,7 +48,7 @@ public sealed class BuilderSqlConnectionStringProviderTests {
 			password,
 			catalog
 		);
-		string actual = await _provider.GetConnectionStringAsync( CancellationToken.None );
+		string actual = await _provider!.GetConnectionStringAsync( CancellationToken.None );
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -81,7 +72,7 @@ public sealed class BuilderSqlConnectionStringProviderTests {
 			password,
 			""
 		);
-		string actual = _provider.GetMasterConnectionString();
+		string actual = _provider!.GetMasterConnectionString();
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -105,19 +96,19 @@ public sealed class BuilderSqlConnectionStringProviderTests {
 			password,
 			""
 		);
-		string actual = await _provider.GetMasterConnectionStringAsync( CancellationToken.None );
+		string actual = await _provider!.GetMasterConnectionStringAsync( CancellationToken.None );
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
 	public void RefreshConnectionString_ValidProvider_DoesNotFail() {
-		Assert.DoesNotThrow( () => _provider.RefreshConnectionString() );
+		Assert.DoesNotThrow( () => _provider!.RefreshConnectionString() );
 	}
 
 	[Test]
 	public void RefreshConnectionStringAsync_ValidProvider_DoesNotFail() {
-		Assert.DoesNotThrowAsync( async () => await _provider.RefreshConnectionStringAsync( CancellationToken.None ) );
+		Assert.DoesNotThrowAsync( async () => await _provider!.RefreshConnectionStringAsync( CancellationToken.None ) );
 	}
 
 	private void SetupOptions(
@@ -126,10 +117,16 @@ public sealed class BuilderSqlConnectionStringProviderTests {
 		string password,
 		string catalog
 	) {
-		_options.DataSource = dataSource;
-		_options.UserId = userId;
-		_options.Password = password;
-		_options.InitialCatalog = catalog;
+		var options = new TestSqlServerContextOptions {
+			ConnectionStringSecretName = SqlServerContextOptions.BuilderConnectionStringProvider,
+			DataSource = dataSource,
+			UserId = userId,
+			Password = password,
+			InitialCatalog = catalog
+		};
+		_provider = new BuilderSqlConnectionStringProvider<TestSqlServerContextOptions>(
+			options
+		);
 	}
 
 	private static string MakeConnectionString(

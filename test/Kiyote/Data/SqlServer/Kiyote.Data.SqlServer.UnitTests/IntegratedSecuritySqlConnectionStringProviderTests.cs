@@ -5,16 +5,7 @@ namespace Kiyote.Data.SqlServer.UnitTests;
 [TestFixture]
 public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 
-	private TestSqlServerContextOptions _options;
-	private ISqlConnectionStringProvider<TestSqlServerContextOptions> _provider;
-
-	[SetUp]
-	public void SetUp() {
-		_options = new TestSqlServerContextOptions();
-		_provider = new IntegratedSecuritySqlConnectionStringProvider<TestSqlServerContextOptions>(
-			_options
-		);
-	}
+	private ISqlConnectionStringProvider<TestSqlServerContextOptions>? _provider;
 
 	[Test]
 	public void GetConnectionString_ValidConnectionString_ConnectionStringReturned() {
@@ -29,7 +20,7 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 			dataSource,
 			catalog
 		);
-		string actual = _provider.GetConnectionString();
+		string actual = _provider!.GetConnectionString();
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -47,7 +38,7 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 			dataSource,
 			catalog
 		);
-		string actual = await _provider.GetConnectionStringAsync( CancellationToken.None );
+		string actual = await _provider!.GetConnectionStringAsync( CancellationToken.None );
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -65,7 +56,7 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 			dataSource,
 			""
 		);
-		string actual = _provider.GetMasterConnectionString();
+		string actual = _provider!.GetMasterConnectionString();
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
@@ -83,27 +74,33 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 			dataSource,
 			""
 		);
-		string actual = await _provider.GetMasterConnectionStringAsync( CancellationToken.None );
+		string actual = await _provider!.GetMasterConnectionStringAsync( CancellationToken.None );
 
 		Assert.That( actual, Is.EqualTo( expected ) );
 	}
 
 	[Test]
 	public void RefreshConnectionString_ValidProvider_DoesNotFail() {
-		Assert.DoesNotThrow( () => _provider.RefreshConnectionString() );
+		Assert.DoesNotThrow( () => _provider!.RefreshConnectionString() );
 	}
 
 	[Test]
 	public void RefreshConnectionStringAsync_ValidProvider_DoesNotFail() {
-		Assert.DoesNotThrowAsync( async () => await _provider.RefreshConnectionStringAsync( CancellationToken.None ) );
+		Assert.DoesNotThrowAsync( async () => await _provider!.RefreshConnectionStringAsync( CancellationToken.None ) );
 	}
 
 	private void SetupOptions(
 		string dataSource,
 		string catalog
 	) {
-		_options.DataSource = dataSource;
-		_options.InitialCatalog = catalog;
+		var options = new TestSqlServerContextOptions {
+			ConnectionStringSecretName = SqlServerContextOptions.IntegratedSecurityConnectionStringProvider,
+			DataSource = dataSource,
+			InitialCatalog = catalog
+		};
+		_provider = new IntegratedSecuritySqlConnectionStringProvider<TestSqlServerContextOptions>(
+			options
+		);
 	}
 
 	private static string MakeConnectionString(

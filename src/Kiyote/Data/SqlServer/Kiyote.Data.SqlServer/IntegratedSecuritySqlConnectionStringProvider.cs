@@ -13,10 +13,10 @@ internal sealed class IntegratedSecuritySqlConnectionStringProvider<T> : ISqlCon
 		if( !string.IsNullOrWhiteSpace( options.ConnectionStringProvider )
 			&& options.ConnectionStringProvider != SqlServerContextOptions.IntegratedSecurityConnectionStringProvider
 		) {
-			throw new ArgumentException( $"{options.ConnectionStringProvider} is not configured for this provider.", nameof( options ) );
+			throw new ArgumentException( $"{nameof( options.ConnectionStringProvider )} is not configured for this provider.", nameof( options ) );
 		}
-		_dataSource = options.DataSource ?? throw new ArgumentException( $"{options.DataSource} must not be empty.", nameof( options ) );
-		_initialCatalog = options.InitialCatalog ?? throw new ArgumentException( $"{options.InitialCatalog} must not be empty.", nameof( options ) );
+		_dataSource = options.DataSource ?? throw new ArgumentException( $"{nameof( options.DataSource )} must not be empty.", nameof( options ) );
+		_initialCatalog = options.InitialCatalog ?? throw new ArgumentException( $"{nameof( options.InitialCatalog )} must not be empty.", nameof( options ) );
 		_connectionString = "";
 		_masterConnectionString = "";
 	}
