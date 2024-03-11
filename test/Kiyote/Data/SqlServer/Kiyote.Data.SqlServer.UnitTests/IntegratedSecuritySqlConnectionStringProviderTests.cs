@@ -5,20 +5,15 @@ namespace Kiyote.Data.SqlServer.UnitTests;
 [TestFixture]
 public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 
-	private Mock<IOptions<TestSqlServerContextOptions>> _options;
+	private TestSqlServerContextOptions _options;
 	private ISqlConnectionStringProvider<TestSqlServerContextOptions> _provider;
 
 	[SetUp]
 	public void SetUp() {
-		_options = new Mock<IOptions<TestSqlServerContextOptions>>( MockBehavior.Strict );
+		_options = new TestSqlServerContextOptions();
 		_provider = new IntegratedSecuritySqlConnectionStringProvider<TestSqlServerContextOptions>(
-			_options.Object
+			_options
 		);
-	}
-
-	[TearDown]
-	public void TearDown() {
-		_options.VerifyAll();
 	}
 
 	[Test]
@@ -107,13 +102,8 @@ public sealed class IntegratedSecuritySqlConnectionStringProviderTests {
 		string dataSource,
 		string catalog
 	) {
-		TestSqlServerContextOptions options = new TestSqlServerContextOptions() {
-			DataSource = dataSource,
-			InitialCatalog = catalog
-		};
-		_ = _options
-			.SetupGet( o => o.Value )
-			.Returns( options );
+		_options.DataSource = dataSource;
+		_options.InitialCatalog = catalog;
 	}
 
 	private static string MakeConnectionString(

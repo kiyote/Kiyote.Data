@@ -7,23 +7,22 @@ namespace Kiyote.Data.SqlServer.UnitTests;
 [TestFixture]
 public sealed class AwsSecretSqlConnectionStringProviderTests {
 
-	private Mock<IOptions<TestSqlServerContextOptions>> _options;
+	private TestSqlServerContextOptions _options;
 	private Mock<IAmazonSecretsManager<TestSqlServerContextOptions>> _secretsManager;
 	private ISqlConnectionStringProvider<TestSqlServerContextOptions> _provider;
 
 	[SetUp]
 	public void SetUp() {
-		_options = new Mock<IOptions<TestSqlServerContextOptions>>( MockBehavior.Strict );
+		_options = new TestSqlServerContextOptions();
 		_secretsManager = new Mock<IAmazonSecretsManager<TestSqlServerContextOptions>>( MockBehavior.Strict );
 		_provider = new AwsSecretSqlConnectionStringProvider<TestSqlServerContextOptions>(
 			_secretsManager.Object,
-			_options.Object
+			_options
 		);
 	}
 
 	[TearDown]
 	public void TearDown() {
-		_options.VerifyAll();
 		_secretsManager.VerifyAll();
 	}
 
@@ -167,12 +166,7 @@ public sealed class AwsSecretSqlConnectionStringProviderTests {
 	private void SetupOptions(
 		string secretName
 	) {
-		TestSqlServerContextOptions options = new TestSqlServerContextOptions() {
-			ConnectionStringSecretName = secretName
-		};
-		_ = _options
-			.SetupGet( o => o.Value )
-			.Returns( options );
+		_options.ConnectionStringSecretName = secretName;
 	}
 
 	private static string MakeConnectionString(

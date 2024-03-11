@@ -1,24 +1,17 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace Kiyote.Data.SqlServer.UnitTests;
+﻿namespace Kiyote.Data.SqlServer.UnitTests;
 
 [TestFixture]
 public sealed class BuilderSqlConnectionStringProviderTests {
 
-	private Mock<IOptions<TestSqlServerContextOptions>> _options;
+	private TestSqlServerContextOptions _options;
 	private ISqlConnectionStringProvider<TestSqlServerContextOptions> _provider;
 
 	[SetUp]
 	public void SetUp() {
-		_options = new Mock<IOptions<TestSqlServerContextOptions>>( MockBehavior.Strict );
+		_options = new TestSqlServerContextOptions();
 		_provider = new BuilderSqlConnectionStringProvider<TestSqlServerContextOptions>(
-			_options.Object
+			_options
 		);
-	}
-
-	[TearDown]
-	public void TearDown() {
-		_options.VerifyAll();
 	}
 
 	[Test]
@@ -133,15 +126,10 @@ public sealed class BuilderSqlConnectionStringProviderTests {
 		string password,
 		string catalog
 	) {
-		TestSqlServerContextOptions options = new TestSqlServerContextOptions() {
-			DataSource = dataSource,
-			UserId = userId,
-			Password = password,
-			InitialCatalog = catalog
-		};
-		_ = _options
-			.SetupGet( o => o.Value )
-			.Returns( options );
+		_options.DataSource = dataSource;
+		_options.UserId = userId;
+		_options.Password = password;
+		_options.InitialCatalog = catalog;
 	}
 
 	private static string MakeConnectionString(

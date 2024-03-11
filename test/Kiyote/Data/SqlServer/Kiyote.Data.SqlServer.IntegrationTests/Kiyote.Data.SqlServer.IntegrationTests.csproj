@@ -12,7 +12,6 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
 		<PackageReference Include="NUnit" />
 		<PackageReference Include="NUnit3TestAdapter">
 			<PrivateAssets>all</PrivateAssets>
@@ -34,11 +33,5 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\..\..\src\Kiyote\Data\SqlServer\Kiyote.Data.SqlServer\Kiyote.Data.SqlServer.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="testsettings.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
 	</ItemGroup>
 </Project>

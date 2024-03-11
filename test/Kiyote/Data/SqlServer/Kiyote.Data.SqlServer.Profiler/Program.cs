@@ -13,21 +13,25 @@ public static class Program {
 	private static IServiceScope? _scope;
 
 #pragma warning disable CA1303 // Do not pass literals as localized parameters
-	public static void Main( string[] args ) {
+	public static void Main(
+		string[] __
+	) {
 		Console.WriteLine( "Initializing." );
 		_catalog = Guid.NewGuid().ToString( "N" );
 		IServiceCollection serviceCollection = new ServiceCollection();
 		_ = serviceCollection.AddOptions();
-		_ = serviceCollection.Configure<ProfilerSqlServerContextOptions>( ( opts ) => {
-			opts.ConnectionStringProvider = SqlServerContextOptions.IntegratedSecurityConnectionStringProvider;
-			opts.DataSource = "localhost";
-			opts.InitialCatalog = _catalog;
-		} );
+		_ = serviceCollection.Configure<ProfilerSqlServerContextOptions>(
+			( opts ) => {
+				opts.ConnectionStringProvider = SqlServerContextOptions.IntegratedSecurityConnectionStringProvider;
+				opts.DataSource = "localhost";
+				opts.InitialCatalog = _catalog;
+			}
+		);
 		_ = serviceCollection.AddIntegratedSecuritySqlServer<ProfilerSqlServerContextOptions>();
 		IServiceProvider services = serviceCollection.BuildServiceProvider();
 
 		_scope = services.CreateAsyncScope();
-		_context = services.GetRequiredService<ISqlServerContext<ProfilerSqlServerContextOptions>>();
+		_context = _scope.ServiceProvider.GetRequiredService<ISqlServerContext<ProfilerSqlServerContextOptions>>();
 		CreateDatabase();
 		FillDatabase();
 
