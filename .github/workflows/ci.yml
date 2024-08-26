@@ -15,7 +15,9 @@ on:
     branches: [main]
 
 env:
-  DOTNET_VERSION: 8.0.201
+  DOTNET_VERSION: 8.0.401
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
 
 permissions:
   pull-requests: write
