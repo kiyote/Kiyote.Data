@@ -2,8 +2,7 @@ name: Release
 
 on:
   create:
-    branches: 
-      - release/**
+    branches: [release/**]
 
 defaults:
   run:
