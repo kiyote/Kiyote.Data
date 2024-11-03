@@ -54,11 +54,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{3E0BB799-9E49-429F-9993-D0EA9EB26394}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DynamoDb", "DynamoDb", "{9D0A26D7-7527-4184-B403-E135F82AA713}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiyote.Data.DynamoDb", "src\Kiyote\Data\DynamoDb\Kiyote.Data.DynamoDb\Kiyote.Data.DynamoDb.csproj", "{45659DD9-FBD2-46E7-B400-D1918809197A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiyote.Data.DynamoDb", "src\Kiyote\Data\DynamoDb\Kiyote.Data.DynamoDb\Kiyote.Data.DynamoDb.csproj", "{45659DD9-FBD2-46E7-B400-D1918809197A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
