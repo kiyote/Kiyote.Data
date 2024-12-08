@@ -10,9 +10,8 @@ public static class Program {
 	public const int IterationCount = 100000;
 	private static string? _catalog;
 	private static ISqlServerContext<ProfilerSqlServerContextOptions>? _context;
-	private static IServiceScope? _scope;
+	private static AsyncServiceScope? _scope;
 
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
 	public static void Main(
 		string[] __
 	) {
@@ -31,7 +30,7 @@ public static class Program {
 		IServiceProvider services = serviceCollection.BuildServiceProvider();
 
 		_scope = services.CreateAsyncScope();
-		_context = _scope.ServiceProvider.GetRequiredService<ISqlServerContext<ProfilerSqlServerContextOptions>>();
+		_context = _scope.Value.ServiceProvider.GetRequiredService<ISqlServerContext<ProfilerSqlServerContextOptions>>();
 		CreateDatabase();
 		FillDatabase();
 
@@ -59,7 +58,6 @@ public static class Program {
 		Console.WriteLine( "Finalizing." );
 		DeleteDatabase();
 	}
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
 
 	private static int DoPerform(
 		ISqlConnection conn,
