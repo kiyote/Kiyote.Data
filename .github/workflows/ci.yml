@@ -11,6 +11,7 @@ on:
     - 'Directory.Packages.props'
     - 'Directory.Build.props'
     - 'nuget.config'
+    - 'db.sh'
   push:
     branches: [main]
 
