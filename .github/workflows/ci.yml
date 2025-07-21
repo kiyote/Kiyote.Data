@@ -11,11 +11,12 @@ on:
     - 'Directory.Packages.props'
     - 'Directory.Build.props'
     - 'nuget.config'
+    - 'db.sh'
   push:
     branches: [main]
 
 env:
-  DOTNET_VERSION: 8.0.402
+  DOTNET_VERSION: 8.0.412
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
 
@@ -50,12 +51,6 @@ jobs:
           MSSQL_SA_PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
     steps:
     - uses: actions/checkout@v4
-
-    - name: Wait for DB
-      shell: bash
-      run: ${{ github.workspace }}/db.sh
-      env:
-        MSSQL_SA_PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
