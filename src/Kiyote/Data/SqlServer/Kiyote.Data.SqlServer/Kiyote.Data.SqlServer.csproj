@@ -10,5 +10,6 @@
 		</PackageReference>
 		<PackageReference Include="Kiyote.AWS" />
 		<PackageReference Include="Microsoft.Data.SqlClient" />
+	<PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="9.0.10" />
 	</ItemGroup>
 </Project>
