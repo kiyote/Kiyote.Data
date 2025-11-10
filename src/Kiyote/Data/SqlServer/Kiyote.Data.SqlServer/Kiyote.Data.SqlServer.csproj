@@ -10,7 +10,7 @@
 		</PackageReference>
 		<PackageReference Include="Kiyote.AWS" />
 		<PackageReference Include="Microsoft.Data.SqlClient" />
-  	<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" />
 	</ItemGroup>
 </Project>
