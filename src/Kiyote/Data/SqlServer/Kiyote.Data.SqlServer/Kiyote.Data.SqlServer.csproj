@@ -10,6 +10,7 @@
 		</PackageReference>
 		<PackageReference Include="Kiyote.AWS" />
 		<PackageReference Include="Microsoft.Data.SqlClient" />
+	<PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" />
 	</ItemGroup>
