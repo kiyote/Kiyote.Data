@@ -16,7 +16,7 @@ on:
     branches: [main]
 
 env:
-  DOTNET_VERSION: 9.0.305
+  DOTNET_VERSION: 10.0.101
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
 
