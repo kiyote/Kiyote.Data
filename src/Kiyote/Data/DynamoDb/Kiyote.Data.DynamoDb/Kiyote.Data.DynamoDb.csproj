@@ -2,6 +2,7 @@
 	<ItemGroup>
 		<PackageReference Include="AWSSDK.SecretsManager" />
 		<PackageReference Include="Kiyote.AWS" />
+	<PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Options" />
 		<PackageReference Include="ConfigureAwait.Fody">
 			<PrivateAssets>all</PrivateAssets>
