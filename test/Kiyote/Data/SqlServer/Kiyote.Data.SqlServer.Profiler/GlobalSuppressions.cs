@@ -5,3 +5,4 @@
 
 [assembly: SuppressMessage( "Naming", "CA1707:Identifiers should not contain underscores", Justification = "Tests use specific naming convention", Scope = "module" )]
 [assembly: SuppressMessage( "Maintainability", "CA1515:Consider making public types internal", Justification = "It's a profiling app", Scope = "module" )]
+[assembly: SuppressMessage( "Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "It's a profiling app", Scope = "module" )]
