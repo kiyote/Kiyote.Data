@@ -1,19 +1,27 @@
 root = true
 
+[*]
+charset = utf-8
+
 [*.md]
 indent_style             = space
+insert_final_newline     = true
 tab_width                = 2
 trim_trailing_whitespace = true
+
+[*.{csproj,runsettings,props}]
+indent_size              = 2
+indent_style             = space
 insert_final_newline     = true
+trim_trailing_whitespace = true
 
 [*.cs]
-indent_style             = tab
-tab_width                = 4
-trim_trailing_whitespace = true
-insert_final_newline     = true
-max_line_length          = off
-guidelines               = 80
-
+guidelines                                                               = 80
+indent_style                                                             = tab
+insert_final_newline                                                     = true
+max_line_length                                                          = off
+tab_width                                                                = 4
+trim_trailing_whitespace                                                 = true
 # C# specific settings:
 #   https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
 #
@@ -298,25 +306,32 @@ dotnet_naming_style.m_camelcase.required_suffix =
 dotnet_naming_style.m_camelcase.word_separator = 
 dotnet_naming_style.m_camelcase.capitalization = camel_case
 
-dotnet_diagnostic.NUnit1032.additional_dispose_methods = SafeDispose
-
 #### .NET Analyzer Configurations ####
 
-dotnet_diagnostic.CA1802.severity   = error						# Use literals where appropriate
-dotnet_diagnostic.CA1825.severity   = error						# Avoid zero-length array allocations
-dotnet_diagnostic.CA1841.severity   = error						# Prefer Dictionary Contains methods
-dotnet_diagnostic.CA1853.severity   = error						# Unnecessary call to 'Dictionary.ContainsKey(key)'
-dotnet_diagnostic.CA1858.severity   = error						# Use StartsWith instead of IndexOf
-dotnet_diagnostic.CA1868.severity   = error						# Unnecessary call to 'Contains' for sets
-dotnet_diagnostic.CA2235.severity   = error						# Mark all non-serializable fields
-dotnet_diagnostic.CA2300.severity   = error						# Do not use insecure deserializer BinaryFormatter
-dotnet_diagnostic.IDE0090.severity  = none						# Use new(...)
-dotnet_diagnostic.NUnit1028.severity = error					# The non-test method is public
-dotnet_code_quality.CA1826.exclude_ordefault_methods = true		# Use property instead of Linq Enumerable method (exclude *OrDefault methods)
-dotnet_diagnostic.IDE0290.severity   = none						# Use primary constructor
-dotnet_analyzer_diagnostic.category-Assertion.severity = none	# Disable all NUnit assertion diagnostics as suggestions until they can be resolved
-dotnet_diagnostic.NUnit1032.severity = none						# Too many errors currently. Suppressing until the errors can be resolved.
-dotnet_diagnostic.IDE0058.severity  = suggestion				# Draw attention to potentially unsafe discards
-dotnet_diagnostic.CA2007.severity   = none						# ConfigureAwait.Fody will rewrite the code to handle .ConfigureAwait calls
-dotnet_diagnostic.CA1303.severity   = none						# Use resources instead of literal strings
+dotnet_diagnostic.CA1802.severity   = error                 # Use literals where appropriate
+dotnet_diagnostic.CA1825.severity   = error                 # Avoid zero-length array allocations
+dotnet_diagnostic.CA1841.severity   = error                 # Prefer Dictionary Contains methods
+dotnet_diagnostic.CA1853.severity   = error                 # Unnecessary call to 'Dictionary.ContainsKey(key)'
+dotnet_diagnostic.CA1858.severity   = error                 # Use StartsWith instead of IndexOf
+dotnet_diagnostic.CA1868.severity   = error                 # Unnecessary call to 'Contains' for sets
+dotnet_diagnostic.CA2235.severity   = error                 # Mark all non-serializable fields
+dotnet_diagnostic.CA2300.severity   = error                 # Do not use insecure deserializer BinaryFormatter
+dotnet_diagnostic.IDE0090.severity  = none                  # Use new(...)
+dotnet_diagnostic.NUnit1028.severity = error                # The non-test method is public
+dotnet_code_quality.CA1826.exclude_ordefault_methods = true # Use property instead of Linq Enumerable method (exclude *OrDefault methods)
+dotnet_diagnostic.IDE0290.severity = none					# Use primary constructor
 
+dotnet_diagnostic.NUnit1032.additional_dispose_methods = SafeDispose
+
+# Disable all NUnit assertion diagnostics as suggestions until they can be resolved
+dotnet_analyzer_diagnostic.category-Assertion.severity = none
+
+# Too many errors currently. Suppressing until the errors can be resolved.
+dotnet_diagnostic.NUnit1032.severity = none
+# Draw attention to potentially unsafe discards
+dotnet_diagnostic.IDE0058.severity = suggestion
+# ConfigureAwait.Fody will rewrite the code to handle .ConfigureAwait calls
+dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.CS3027.severity = none
+dotnet_diagnostic.CS3002.severity = none
+dotnet_diagnostic.CS3001.severity = none

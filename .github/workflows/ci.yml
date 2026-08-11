@@ -16,7 +16,7 @@ on:
     branches: [main]
 
 env:
-  DOTNET_VERSION: 10.0.102
+  DOTNET_VERSION: 10.0.302
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
 
@@ -50,10 +50,10 @@ jobs:
           ACCEPT_EULA: 'Y'
           MSSQL_SA_PASSWORD: ${{ needs.configure.outputs.MSSQL_SA_PASSWORD }}
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v5
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -86,7 +86,7 @@ jobs:
       run: ${{ github.workspace }}/create-orphan-branch.sh badges ${{ github.ref_name }}
 
     - name: Make Coverage Badge      
-      uses: action-badges/cobertura-coverage-xml-badges@0.4.0
+      uses: action-badges/cobertura-coverage-xml-badges@0.5.0
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
         file-name: coverage.svg
