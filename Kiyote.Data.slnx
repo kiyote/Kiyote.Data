@@ -1,0 +1,41 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CODEOWNERS" />
+    <File Path="create-orphan-branch.sh" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="forceclean.ps1" />
+    <File Path="LICENSE" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github/dependabot.yaml" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/workflows/">
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/release.yml" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Kiyote/" />
+  <Folder Name="/src/Kiyote/Data/" />
+  <Folder Name="/src/Kiyote/Data/DynamoDb/">
+    <Project Path="src/Kiyote/Data/DynamoDb/Kiyote.Data.DynamoDb/Kiyote.Data.DynamoDb.csproj" />
+  </Folder>
+  <Folder Name="/src/Kiyote/Data/SqlServer/">
+    <Project Path="src/Kiyote/Data/SqlServer/Kiyote.Data.SqlServer/Kiyote.Data.SqlServer.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <File Path="test/.runsettings" />
+  </Folder>
+  <Folder Name="/test/Kiyote/" />
+  <Folder Name="/test/Kiyote/Data/" />
+  <Folder Name="/test/Kiyote/Data/SqlServer/">
+    <Project Path="test/Kiyote/Data/SqlServer/Kiyote.Data.SqlServer.Benchmarks/Kiyote.Data.SqlServer.Benchmarks.csproj" />
+    <Project Path="test/Kiyote/Data/SqlServer/Kiyote.Data.SqlServer.IntegrationTests/Kiyote.Data.SqlServer.IntegrationTests.csproj" />
+    <Project Path="test/Kiyote/Data/SqlServer/Kiyote.Data.SqlServer.Profiler/Kiyote.Data.SqlServer.Profiler.csproj" />
+    <Project Path="test/Kiyote/Data/SqlServer/Kiyote.Data.SqlServer.UnitTests/Kiyote.Data.SqlServer.UnitTests.csproj" />
+  </Folder>
+</Solution>
